@@ -1,8 +1,11 @@
 package com.lambdaschool.sprint2_challenge
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -20,6 +23,8 @@ class ShoppingListAdapter (val groceryList: MutableList<ShoppingListModel>) : Re
         return groceryList.size
     }
 
+    private var context: Context? = null
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pickedItems = groceryList[position]
         holder.bindModel(pickedItems)
@@ -30,10 +35,16 @@ class ShoppingListAdapter (val groceryList: MutableList<ShoppingListModel>) : Re
         }
     }
 
+     fun setEnterAmimation(viewToAnimate : View, position: Int) {
+         val animation : Animation = AnimationUtils.loadAnimation(viewToAnimate.context, android.R.anim.slide_in_left)
+         viewToAnimate.startAnimation(animation)
+
+     }  //how to make custom one at 47 min mark
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val shoppingImageView: ImageView = view.grocery_image_view
         val shoppingNameView: TextView = view.grocery_name_view
-        val shoppingItemParent: LinearLayout = view. grocery_item_parent
+        val shoppingItemParent: LinearLayout = view.grocery_item_parent
 
 
         fun bindModel(pickedItems: ShoppingListModel) {
@@ -45,9 +56,10 @@ class ShoppingListAdapter (val groceryList: MutableList<ShoppingListModel>) : Re
                 shoppingItemParent.setBackgroundColor(ContextCompat.getColor(itemView.context,R.color.White))
 
 
+
         }
+
     }
 
-
-
+    //setEnterAmimation(viewHolder.shoppingItemParent, position) //not working with my code ??
 }
